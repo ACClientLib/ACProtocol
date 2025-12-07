@@ -7838,6 +7838,63 @@
 				<field type="string" name="RestoredCharName" text="Name of character to restore" />
 				<field type="string" name="AccountToRestoreTo" text="Account name to restore the character on" />
 			</type>
+			<type name="Communication_TurbineChat" queue="Logon" text="Send or receive a message using Turbine Chat." type="0xF7DE" lastUpdater="zegeger" lastUpdate="20170913">
+				<field type="uint" name="MmessageSize" text="the number of bytes that follow after this DWORD" />
+				<field type="TurbineChatType" name="Type" text="the type of data contained in this message" />
+				<field type="uint" name="BlobDispatchType" />
+				<field type="int" name="TargetType" />
+				<field type="int" name="TargetId" />
+				<field type="int" name="TransportType" />
+				<field type="int" name="TransportId" />
+				<field type="int" name="Cookie" />
+				<field type="uint" name="PayloadSize" text="the number of bytes that follow after this DWORD" />
+				<switch name="Type" summary-exclude="true">
+					<case value="0x01" text="inbound message to client">
+						<switch name="BlobDispatchType" summary-exclude="true">
+							<case value="0x01" text="SendToRoomChatEvent">
+								<field type="uint" name="RoomId" text="the channel number of the message" />
+								<field type="WString" name="DisplayName" text="the name of the player sending the message" />
+								<field type="WString" name="Text" text="the message text" />
+								<field type="uint" name="ExtraDataSize" text="the number of bytes that follow after this DWORD" />
+								<field type="ObjectId" name="SpeakerId" text="the object Id of the player sending the message" />
+								<field type="int" name="HResult" />
+								<field type="uint" name="ChatType" />
+							</case>
+						</switch>
+					</case>
+					<case value="0x03" text="outbound message from client">
+						<switch name="BlobDispatchType" summary-exclude="true">
+							<case value="0x02" text="SendToRoomByIdRequest, this is the only one used by the client I believe">
+								<field type="uint" name="ContextId" />
+								<field type="uint" name="ResponseId" staticValue="2" />
+								<field type="uint" name="MethodId" staticValue="2" />
+								<field type="uint" name="RoomId" text="the channel number of the message" />
+								<field type="WString" name="Text" text="the message text" />
+								<field type="uint" name="ExtraDataSize" text="the number of bytes that follow after this DWORD" />
+								<field type="ObjectId" name="SpeakerId" text="the object Id of the player sending the message (should be you)" />
+								<field type="int" name="HResult" />
+								<field type="uint" name="ChatType" />
+							</case>
+						</switch>
+					</case>
+					<case value="0x05" text="inbound acknowledgement to client of outbound message">
+						<switch name="BlobDispatchType" summary-exclude="true">
+							<case value="0x01" text="SendToRoomByNameResponse">
+								<field type="uint" name="ContextId" />
+								<field type="uint" name="ResponseId" staticValue="1" text="Type of response, should be 1 here" />
+								<field type="uint" name="MethodId" staticValue="1" text="Type of request, should be 1 here" />
+								<field type="int" name="HResult" />
+							</case>
+							<case value="0x02" text="SendToRoomByIdResponse">
+								<field type="uint" name="ContextId" />
+								<field type="uint" name="ResponseId" staticValue="2" text="Type of response, should be 2 here" />
+								<field type="uint" name="MethodId" staticValue="2" text="Type of request, should be 2 here" />
+								<field type="int" name="HResult" />
+							</case>
+						</switch>
+					</case>
+				</switch>
+			</type>
 			<type name="DDD_RequestDataMessage" queue="CLCache" text="DDD request for data" type="0xF7E3" lastUpdater="zegeger" lastUpdate="20170913">
 				<field type="uint" name="ResourceType" text="the resource type" />
 				<field type="DataId" name="ResourceId" text="the resource Id number" />
