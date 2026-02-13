@@ -7839,7 +7839,7 @@
 				<field type="string" name="AccountToRestoreTo" text="Account name to restore the character on" />
 			</type>
 			<type name="Communication_TurbineChat" queue="Logon" text="Send or receive a message using Turbine Chat." type="0xF7DE" lastUpdater="zegeger" lastUpdate="20170913">
-				<field type="uint" name="MmessageSize" text="the number of bytes that follow after this DWORD" />
+				<field type="uint" name="MessageSize" text="the number of bytes that follow after this DWORD" />
 				<field type="TurbineChatType" name="Type" text="the type of data contained in this message" />
 				<field type="uint" name="BlobDispatchType" />
 				<field type="int" name="TargetType" />
@@ -7873,7 +7873,7 @@
 								<field type="uint" name="ExtraDataSize" text="the number of bytes that follow after this DWORD" />
 								<field type="ObjectId" name="SpeakerId" text="the object Id of the player sending the message (should be you)" />
 								<field type="int" name="HResult" />
-								<field type="uint" name="ChatType" />
+								<field type="ChatType" name="ChatType" />
 							</case>
 						</switch>
 					</case>
